@@ -1,8 +1,9 @@
 export default class Creature {
-  constructor(startingX, startingY, dimension, gameWidth, gameHeight, speed, drawInfo) {
+  constructor(startingX, startingY, dimension, gameWidth, gameHeight, speed, colour, drawInfo) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.speed = speed;
+    this.colour = colour;
     this.drawInfo = drawInfo;
     this.dimensions = {
       width: dimension,
@@ -20,7 +21,7 @@ export default class Creature {
   }
 
   drawer(ctx) {
-    ctx.fillStyle = "red";
+    ctx.fillStyle = this.colour;
     ctx.beginPath();
     ctx.ellipse(
       this.position.x + this.dimensions.width / 2,

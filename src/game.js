@@ -42,7 +42,7 @@ export default class Game {
 
   update() {
     this.ctx.fillStyle = "white";
-    this.ctx.fillRect(this.canvas.clientTop, this.canvas.clientLeft, this.width * this.divisionSize, this.height * this.divisionSize);
+    this.ctx.fillRect(0, 0, this.width * this.divisionSize, this.height * this.divisionSize);
     this.gameComponents.forEach((component) => {
       component.updateAndRedrawer(this.ctx);
     });
