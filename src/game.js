@@ -40,11 +40,11 @@ export default class Game {
     }
   }
 
-  update(deltaTime) {
+  update() {
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(this.canvas.clientTop, this.canvas.clientLeft, this.width * this.divisionSize, this.height * this.divisionSize);
     this.gameComponents.forEach((component) => {
-      component.updateAndRedrawer(this.ctx, deltaTime);
+      component.updateAndRedrawer(this.ctx);
     });
 
     if (this.showGraph) {

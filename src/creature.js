@@ -1,10 +1,12 @@
 export default class Creature {
-  constructor(startingX, startingY, dimenstion, speed, drawInfo) {
+  constructor(startingX, startingY, dimension, gameWidth, gameHeight, speed, drawInfo) {
+    this.gameWidth = gameWidth;
+    this.gameHeight = gameHeight;
     this.speed = speed;
     this.drawInfo = drawInfo;
     this.dimensions = {
-      width: dimenstion,
-      height: dimenstion,
+      width: dimension,
+      height: dimension,
     };
 
     this.position = {
@@ -59,12 +61,12 @@ export default class Creature {
     }
 
     if (
-      this.position.x <= 0 ||
-      this.position.x + this.dimensions.width >= this.gameWidth ||
-      this.position.y <= 0 ||
-      this.position.y + this.dimensions.height >= this.gameHeight
+      this.position.x < 0 ||
+      this.position.x >= this.gameWidth * this.dimensions.width ||
+      this.position.y < 0 ||
+      this.position.y >= this.gameHeight * this.dimensions.height
     ) {
-      console.log("onnexting collide");
+      console.log("Hit Edge");
       this.position = currentPosition;
     }
   }

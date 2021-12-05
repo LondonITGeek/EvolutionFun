@@ -17,6 +17,8 @@ function initialiseGame() {
       roundToNearestFive(randomNumberBetween(0, 635)),
       roundToNearestFive(randomNumberBetween(0, 635)),
       game.divisionSize,
+      game.width,
+      game.height,
       1,
       true
     );
