@@ -7,13 +7,13 @@
     "rxjs": "^6.5.4"
   },
   "devDependencies": {
-    "http-server": "^14.0.0",
+    "browser-sync": "^2.27.7",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
   },
   "scripts": {
     "build": "webpack",
-    "start": "http-server ./dist -c-1",
+    "start": "browser-sync start --server --serveStatic ./dist --files ./dist/*.*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

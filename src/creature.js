@@ -1,4 +1,7 @@
 export default class Creature {
+  // gnome
+  // brain
+
   constructor(startingX, startingY, dimension, gameWidth, gameHeight, speed, colour, drawInfo) {
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;

@@ -1,5 +1,7 @@
 import Creature from "./creature.js";
 import Game from "./game.js";
+import Genome from "./genome.js";
+import NeuralNetwork from "./nn/neural-network.js";
 
 function getRandomColour() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -19,7 +21,18 @@ function getPositionWithin(game) {
 
 function initialiseGame() {
   const game = new Game(128, 128, 5, false);
-  for (let index = 0; index < 1000; index++) {
+  const creature = new Creature(
+    getPositionWithin(game),
+    getPositionWithin(game),
+    game.divisionSize,
+    game.width,
+    game.height,
+    1,
+    "red",
+    true
+  );
+  game.addGameComponents(creature);
+  for (let index = 0; index < 25; index++) {
     // 0,0 to 635,635
     const creature = new Creature(
       getPositionWithin(game),
@@ -38,7 +51,7 @@ function initialiseGame() {
 }
 
 let game = initialiseGame();
-let framesPerSecond = 20;
+let framesPerSecond = 30;
 
 function animate() {
   game.update();
@@ -46,3 +59,12 @@ function animate() {
 }
 
 animate();
+
+var n = new Genome(4);
+n.toString();
+
+var nn = new NeuralNetwork(2);
+for (let index = 0; index < 4; index++) {
+  var connection = nn.getConnection(n.chromosomes[index]);
+  console.log(connection.toString());
+}
