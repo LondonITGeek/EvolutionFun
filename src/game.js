@@ -4,7 +4,7 @@ export default class Game {
     this.width = GAME_WIDTH;
     this.divisionSize = DIVISION_SIZE;
     this.showGraph = SHOW_GRAPH;
-    this.gameComponents = [];
+    this.gameCreatures = [];
 
     this.canvas = document.createElement("canvas");
     this.canvas.setAttribute("id", "canvas");
@@ -15,8 +15,8 @@ export default class Game {
     this.ctx = canvas.getContext("2d");
   }
 
-  addGameComponents(gameComponent) {
-    this.gameComponents.push(gameComponent);
+  addCreature(creature) {
+    this.gameCreatures.push(creature);
   }
 
   drawGrid() {
@@ -43,8 +43,8 @@ export default class Game {
   update() {
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, 0, this.width * this.divisionSize, this.height * this.divisionSize);
-    this.gameComponents.forEach((component) => {
-      component.updateAndRedrawer(this.ctx);
+    this.gameCreatures.forEach((creature) => {
+      creature.updateAndRedrawer(this.ctx);
     });
 
     if (this.showGraph) {

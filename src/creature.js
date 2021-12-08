@@ -1,11 +1,10 @@
 export default class Creature {
-  constructor(genome, neuralNetwork, startingX, startingY, dimension, gameWidth, gameHeight, speed, colour, drawInfo) {
+  constructor(genome, neuralNetwork, startingX, startingY, dimension, gameWidth, gameHeight, speed, drawInfo) {
     this.genome = genome;
     this.neuralNetwork = neuralNetwork;
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.speed = speed;
-    this.colour = colour;
     this.drawInfo = drawInfo;
     this.dimensions = {
       width: dimension,
@@ -16,6 +15,28 @@ export default class Creature {
       x: startingX,
       y: startingY,
     };
+
+    this.generateColour();
+  }
+
+  scaleValue(value, xMin, xMax, yMin, yMax) {
+    var percent = (value - yMin) / (yMax - yMin);
+    return percent * (xMax - xMin) + xMin;
+  }
+
+  getRandomColour(scaledGenomeNumber) {
+    return `#${Math.floor(scaledGenomeNumber * 16777215).toString(16)}`;
+  }
+
+  generateColour() {
+    var genomeColour =
+      this.genome.chromosomes.reduce((lastValue, currentValue) => {
+        lastValue ^= currentValue;
+        return lastValue >>> 0;
+      }, this.genome.chromosomes[0]) >>> 0;
+
+    var scaledGenomeColour = this.scaleValue(genomeColour, 0, 1, 0, 4294967295); // Max value of unsigned 32 bit int... 4294967295
+    this.colour = this.getRandomColour(scaledGenomeColour);
   }
 
   drawerLable(ctx) {
@@ -48,39 +69,21 @@ export default class Creature {
 
     if (actionProbabilities.length > 0) {
       var currentProbabilityRoll = Math.random();
-      var bestAction = actionProbabilities.sort((a, b) => a - b)[0];
-      //console.log(bestAction.getValue());
+      var bestAction = actionProbabilities.sort((a, b) => b - a)[0];
+      console.log(bestAction.getValue());
 
       if (currentProbabilityRoll < bestAction.getValue()) {
         bestAction.applyAction(this);
       }
-
-      // switch (Math.floor(Math.random() * 4) + 1) {
-      //   case 1: // right
-      //     this.position.x += this.speed * this.dimensions.width;
-      //     break;
-      //   case 2: // left
-      //     this.position.x -= this.speed * this.dimensions.width;
-      //     break;
-      //   case 3: // up
-      //     this.position.y -= this.speed * this.dimensions.width;
-      //     break;
-      //   case 4: // down
-      //     this.position.y += this.speed * this.dimensions.width;
-      //     break;
-      //   default:
-      //     break;
-      // }
-    }
-
-    if (
-      this.position.x < 0 ||
-      this.position.x >= this.gameWidth * this.dimensions.width ||
-      this.position.y < 0 ||
-      this.position.y >= this.gameHeight * this.dimensions.height
-    ) {
-      console.log("Hit Edge");
-      this.position = currentPosition;
+      if (
+        this.position.x < 0 ||
+        this.position.x >= this.gameWidth * this.dimensions.width ||
+        this.position.y < 0 ||
+        this.position.y >= this.gameHeight * this.dimensions.height
+      ) {
+        //console.log("Hit Edge");
+        this.position = currentPosition;
+      }
     }
   }
 
