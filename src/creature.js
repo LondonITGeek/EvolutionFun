@@ -1,8 +1,7 @@
 export default class Creature {
-  // gnome
-  // brain
-
-  constructor(startingX, startingY, dimension, gameWidth, gameHeight, speed, colour, drawInfo) {
+  constructor(genome, neuralNetwork, startingX, startingY, dimension, gameWidth, gameHeight, speed, colour, drawInfo) {
+    this.genome = genome;
+    this.neuralNetwork = neuralNetwork;
     this.gameWidth = gameWidth;
     this.gameHeight = gameHeight;
     this.speed = speed;
@@ -20,7 +19,7 @@ export default class Creature {
   }
 
   drawerLable(ctx) {
-    ctx.fillText(`${this.position.x}:${this.position.y}`, this.position.x - 10, this.position.y - 10);
+    ctx.fillText(`${this.genome.toString()}`, this.position.x - 10, this.position.y - 10);
   }
 
   drawer(ctx) {
@@ -42,26 +41,36 @@ export default class Creature {
     }
   }
 
-  update() {
+  update(actionProbabilities) {
     const currentPosition = {
       ...this.position,
     };
 
-    switch (Math.floor(Math.random() * 4) + 1) {
-      case 1: // right
-        this.position.x += this.speed * this.dimensions.width;
-        break;
-      case 2: // left
-        this.position.x -= this.speed * this.dimensions.width;
-        break;
-      case 3: // up
-        this.position.y -= this.speed * this.dimensions.width;
-        break;
-      case 4: // down
-        this.position.y += this.speed * this.dimensions.width;
-        break;
-      default:
-        break;
+    if (actionProbabilities.length > 0) {
+      var currentProbabilityRoll = Math.random();
+      var bestAction = actionProbabilities.sort((a, b) => a - b)[0];
+      //console.log(bestAction.getValue());
+
+      if (currentProbabilityRoll < bestAction.getValue()) {
+        bestAction.applyAction(this);
+      }
+
+      // switch (Math.floor(Math.random() * 4) + 1) {
+      //   case 1: // right
+      //     this.position.x += this.speed * this.dimensions.width;
+      //     break;
+      //   case 2: // left
+      //     this.position.x -= this.speed * this.dimensions.width;
+      //     break;
+      //   case 3: // up
+      //     this.position.y -= this.speed * this.dimensions.width;
+      //     break;
+      //   case 4: // down
+      //     this.position.y += this.speed * this.dimensions.width;
+      //     break;
+      //   default:
+      //     break;
+      // }
     }
 
     if (
@@ -76,7 +85,8 @@ export default class Creature {
   }
 
   updateAndRedrawer(ctx) {
-    this.update();
+    var actionProbabilities = this.neuralNetwork.feedForward(this);
+    this.update(actionProbabilities);
     this.drawer(ctx);
   }
 }

@@ -1,61 +1,33 @@
 export default class Neuron {
-  constructor(name) {
-    this.name = name;
+  constructor(type, game) {
+    this.type = type;
+    this.game = game;
+    this.connections = [];
+    this.lastValue = 0;
+  }
+
+  scaleValue(value, xMin, xMax, yMin, yMax) {
+    var percent = (value - yMin) / (yMax - yMin);
+    return percent * (xMax - xMin) + xMin;
+  }
+
+  addConnection(connection) {
+    this.connections.push(connection);
+  }
+
+  updateLastValue(lastValue) {
+    this.lastValue = lastValue;
+  }
+
+  getValue(creature) {
+    return this.lastValue;
+  }
+
+  applyAction(creature) {
+    return;
   }
 
   toString() {
-    return `${this.name}`;
-  }
-}
-
-// Input (Sensors)
-
-export class SensitivityToProximityToEast extends Neuron {
-  constructor() {
-    super("SensitivityToProximityToEast");
-  }
-}
-
-export class SensitivityToProximityToWest extends Neuron {
-  constructor() {
-    super("SensitivityToProximityToWest");
-  }
-}
-
-export class SensitivityToProximityToNorth extends Neuron {
-  constructor() {
-    super("SensitivityToProximityToNorth");
-  }
-}
-
-export class SensitivityToProximityToSouth extends Neuron {
-  constructor() {
-    super("SensitivityToProximityToSouth");
-  }
-}
-
-// Outputs (Actions)
-
-export class GoEast extends Neuron {
-  constructor() {
-    super("GoEast");
-  }
-}
-
-export class GoWest extends Neuron {
-  constructor() {
-    super("GoWest");
-  }
-}
-
-export class GoNorth extends Neuron {
-  constructor() {
-    super("GoNorth");
-  }
-}
-
-export class GoSouth extends Neuron {
-  constructor() {
-    super("GoSouth");
+    return `${this.type}`;
   }
 }
