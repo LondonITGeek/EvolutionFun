@@ -104,7 +104,7 @@ export default class NeuralNetwork {
     let getInput = (connection, seenNodes) => {
       depth++;
       if (depth > 15) {
-        debugger;
+        //debugger;
       }
       // this connection has a source and a weight, need to get the source input value * weight and return that
       var sink = connection.sink;

@@ -1,4 +1,28 @@
 export default class SuccessCriteria {
+  static centerSuccess() {
+    return [
+      {
+        borderColour: "green",
+        x: 120,
+        y: 120,
+        width: 400,
+        height: 400,
+      },
+    ];
+  }
+
+  static centerSmallSuccess() {
+    return [
+      {
+        borderColour: "green",
+        x: 50,
+        y: 220,
+        width: 550,
+        height: 200,
+      },
+    ];
+  }
+
   static topRightCornerSuccess() {
     return [
       {

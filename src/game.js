@@ -29,7 +29,13 @@ export default class Game {
           return c.position.x >= criteria.x && c.position.y >= criteria.y && c.position.x <= xBottom && c.position.y <= yBottom;
         });
       })
-      .sort((a, b) => a.fitness - b.fitness);
+      .sort((a, b) => {
+        if (a.fitness === 1) {
+          return 1;
+        }
+
+        a.fitness - b.fitness;
+      });
   }
 
   creatureHasMadeItHome(creature, successCriteria) {
