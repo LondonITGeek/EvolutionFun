@@ -1,9 +1,10 @@
 export default class Game {
-  constructor(GAME_HEIGHT, GAME_WIDTH, DIVISION_SIZE, SHOW_GRAPH) {
+  constructor(GAME_HEIGHT, GAME_WIDTH, DIVISION_SIZE, SHOW_GRAPH, successCriteria) {
     this.height = GAME_HEIGHT;
     this.width = GAME_WIDTH;
     this.divisionSize = DIVISION_SIZE;
     this.showGraph = SHOW_GRAPH;
+    this.successCriteria = successCriteria;
     this.gameCreatures = [];
 
     this.canvas = document.createElement("canvas");
@@ -17,6 +18,16 @@ export default class Game {
 
   addCreature(creature) {
     this.gameCreatures.push(creature);
+  }
+
+  getSurvivors(successCriteria) {
+    return this.gameCreatures.filter((c) => {
+      return successCriteria.some((criteria) => {
+        const xBottom = criteria.x + criteria.width;
+        const yBottom = criteria.y + criteria.height;
+        return c.position.x >= criteria.x && c.position.y >= criteria.y && c.position.x <= xBottom && c.position.y <= yBottom;
+      });
+    });
   }
 
   drawGrid() {
@@ -50,5 +61,7 @@ export default class Game {
     if (this.showGraph) {
       this.drawGrid();
     }
+
+    this.successCriteria.drawer(this.ctx);
   }
 }

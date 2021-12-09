@@ -70,7 +70,7 @@ export default class Creature {
     if (actionProbabilities.length > 0) {
       var currentProbabilityRoll = Math.random();
       var bestAction = actionProbabilities.sort((a, b) => b - a)[0];
-      console.log(bestAction.getValue());
+      //console.log(bestAction.getValue());
 
       if (currentProbabilityRoll < bestAction.getValue()) {
         bestAction.applyAction(this);
