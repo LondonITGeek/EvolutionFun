@@ -1,3 +1,5 @@
+import { flipBit } from "./bit-operations";
+
 export default class Genome {
   constructor(size, generateRandomValues = true) {
     if (size % 2 !== 0) {
@@ -10,7 +12,7 @@ export default class Genome {
     }
   }
 
-  static createNewGenomeFromParents(genomeOne, genomeTwo) {
+  static createNewGenomeFromParents(genomeOne, genomeTwo, mutationRate) {
     var takeFromParentOneFirst = Math.random() > 0.5;
     var size = genomeOne.size;
     var newGenome = new Genome(size, false);
@@ -19,6 +21,19 @@ export default class Genome {
         newGenome.chromosomes[index] = genomeOne.chromosomes[index];
       } else {
         newGenome.chromosomes[index] = genomeTwo.chromosomes[index];
+      }
+
+      var mutationShouldOccure = Math.random() < mutationRate;
+      if (mutationShouldOccure) {
+        var originalChromosome = newGenome.chromosomes[index];
+        var bitToFlip = Math.floor(Math.random() * 32) + 1;
+        var mutatedChromosome = flipBit(originalChromosome, bitToFlip);
+        console.log(
+          `Mutation occured on bit ${bitToFlip}, change from ${(originalChromosome >>> 0).toString(2)} to ${(
+            mutatedChromosome >>> 0
+          ).toString(2)}.`
+        );
+        newGenome.chromosomes[index] = mutatedChromosome;
       }
 
       takeFromParentOneFirst = !takeFromParentOneFirst;

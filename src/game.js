@@ -4,7 +4,7 @@ export default class Game {
     this.width = GAME_WIDTH;
     this.divisionSize = DIVISION_SIZE;
     this.showGraph = SHOW_GRAPH;
-    this.successCriteria = successCriteria;
+    this.successCriteriaVisualization = successCriteria;
     this.gameCreatures = [];
 
     this.canvas = document.createElement("canvas");
@@ -21,12 +21,27 @@ export default class Game {
   }
 
   getSurvivors(successCriteria) {
-    return this.gameCreatures.filter((c) => {
-      return successCriteria.some((criteria) => {
-        const xBottom = criteria.x + criteria.width;
-        const yBottom = criteria.y + criteria.height;
-        return c.position.x >= criteria.x && c.position.y >= criteria.y && c.position.x <= xBottom && c.position.y <= yBottom;
-      });
+    return this.gameCreatures
+      .filter((c) => {
+        return successCriteria.some((criteria) => {
+          const xBottom = criteria.x + criteria.width;
+          const yBottom = criteria.y + criteria.height;
+          return c.position.x >= criteria.x && c.position.y >= criteria.y && c.position.x <= xBottom && c.position.y <= yBottom;
+        });
+      })
+      .sort((a, b) => a.fitness - b.fitness);
+  }
+
+  creatureHasMadeItHome(creature, successCriteria) {
+    return successCriteria.some((criteria) => {
+      const xBottom = criteria.x + criteria.width;
+      const yBottom = criteria.y + criteria.height;
+      return (
+        creature.position.x >= criteria.x &&
+        creature.position.y >= criteria.y &&
+        creature.position.x <= xBottom &&
+        creature.position.y <= yBottom
+      );
     });
   }
 
@@ -51,17 +66,20 @@ export default class Game {
     }
   }
 
-  update() {
+  update(currentStepCount) {
     this.ctx.fillStyle = "white";
     this.ctx.fillRect(0, 0, this.width * this.divisionSize, this.height * this.divisionSize);
     this.gameCreatures.forEach((creature) => {
       creature.updateAndRedrawer(this.ctx);
+      if (creature.fitness === -1 && this.creatureHasMadeItHome(creature, this.successCriteriaVisualization.successCriteria)) {
+        creature.setFitness(currentStepCount);
+      }
     });
 
     if (this.showGraph) {
       this.drawGrid();
     }
 
-    this.successCriteria.drawer(this.ctx);
+    this.successCriteriaVisualization.drawer(this.ctx);
   }
 }

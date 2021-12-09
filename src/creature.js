@@ -1,5 +1,6 @@
 export default class Creature {
   constructor(genome, neuralNetwork, startingX, startingY, dimension, gameWidth, gameHeight, speed, drawInfo) {
+    this.fitness = -1;
     this.genome = genome;
     this.neuralNetwork = neuralNetwork;
     this.gameWidth = gameWidth;
@@ -17,6 +18,12 @@ export default class Creature {
     };
 
     this.generateColour();
+  }
+
+  setFitness(fitness) {
+    if (this.fitness === -1) {
+      this.fitness = fitness;
+    }
   }
 
   scaleValue(value, xMin, xMax, yMin, yMax) {
@@ -68,12 +75,11 @@ export default class Creature {
     };
 
     if (actionProbabilities.length > 0) {
-      var currentProbabilityRoll = Math.random();
-      var bestAction = actionProbabilities.sort((a, b) => b - a)[0];
+      var bestAction = actionProbabilities.filter((action) => Math.random() < action.getValue()).sort((a, b) => b - a);
       //console.log(bestAction.getValue());
 
-      if (currentProbabilityRoll < bestAction.getValue()) {
-        bestAction.applyAction(this);
+      if (bestAction[0]) {
+        bestAction[0].applyAction(this);
       }
       if (
         this.position.x < 0 ||

@@ -89,12 +89,16 @@ export default class Simulation {
   _generateNextCohort(survivors) {
     this.game.gameCreatures = [];
     for (let indexOne = 0, indexTwo = 2; indexTwo < survivors.length; indexOne++, indexTwo++) {
+      if (this.game.gameCreatures.length > this.sizeOfPopulation) {
+        console.log("Hit population limit");
+        break;
+      }
       const parentOne = survivors[indexOne];
       const parentTwo = survivors[indexOne + 1];
       const parentOneGenome = parentOne.genome;
       const parentTwoGenome = parentTwo.genome;
-      var childGenomeOne = Genome.createNewGenomeFromParents(parentOneGenome, parentTwoGenome);
-      var childGenomeTwo = Genome.createNewGenomeFromParents(parentTwoGenome, parentOneGenome);
+      var childGenomeOne = Genome.createNewGenomeFromParents(parentOneGenome, parentTwoGenome, this.mutationRate);
+      var childGenomeTwo = Genome.createNewGenomeFromParents(parentTwoGenome, parentOneGenome, this.mutationRate);
       const neuralNetworkOne = new NeuralNetwork(
         this.numberOfNeuronsInHiddenLayer,
         childGenomeOne,
@@ -137,7 +141,7 @@ export default class Simulation {
 
   _animate() {
     this.stepCountLabel.innerText = `Generation Step Count: ${this.currentStepCount++}`;
-    this.game.update();
+    this.game.update(this.currentStepCount);
     if (this.currentStepCount <= this.movesPerGeneration) {
       setTimeout(() => requestAnimationFrame(this._animate.bind(this)), 1000 / this.framesPerSecond);
     } else {

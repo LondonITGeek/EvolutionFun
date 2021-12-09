@@ -10,3 +10,17 @@ export function slice(number, start, end) {
   var result = number & mask;
   return result >> start;
 }
+
+export function flipBit(number, bitToFlip) {
+  if (checkBit(number, bitToFlip)) {
+    // bit is on
+    var mask = 1 << bitToFlip;
+    // invert mask then and
+    mask = ~mask;
+    return (number & mask) >>> 0;
+  }
+
+  // bit is off
+  var mask = 1 << bitToFlip;
+  return (number | mask) >>> 0;
+}

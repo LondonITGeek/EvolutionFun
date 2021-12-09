@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "recharts": "^2.1.6",
     "rxjs": "^6.5.4"
   },
   "devDependencies": {
