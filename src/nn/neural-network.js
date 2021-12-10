@@ -21,6 +21,7 @@ export default class NeuralNetwork {
     }
 
     this.inputNeurons = [
+      sensitivityNeuronFactory("SensitivityToProximityToCenter"),
       sensitivityNeuronFactory("SensitivityToProximityToEast"),
       sensitivityNeuronFactory("SensitivityToProximityToNorth"),
       sensitivityNeuronFactory("SensitivityToProximityToSouth"),

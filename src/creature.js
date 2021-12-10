@@ -76,7 +76,6 @@ export default class Creature {
 
     if (actionProbabilities.length > 0) {
       var bestAction = actionProbabilities.filter((action) => Math.random() < action.getValue()).sort((a, b) => b - a);
-      //console.log(bestAction.getValue());
 
       if (bestAction[0]) {
         bestAction[0].applyAction(this);
@@ -87,7 +86,6 @@ export default class Creature {
         this.position.y < 0 ||
         this.position.y >= this.gameHeight * this.dimensions.height
       ) {
-        //console.log("Hit Edge");
         this.position = currentPosition;
       }
     }

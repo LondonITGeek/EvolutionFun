@@ -1,12 +1,12 @@
 import Creature from "./creature.js";
 import Game from "./game.js";
 import Genome from "./genome.js";
+import SensitivityToProximityToCenter from "./nn/inputs/SensitivityToProximityToCenter.js";
 import SensitivityToProximityToEast from "./nn/inputs/SensitivityToProximityToEast";
 import SensitivityToProximityToWest from "./nn/inputs/SensitivityToProximityToWest";
 import SensitivityToProximityToSouth from "./nn/inputs/SensitivityToProximityToSouth";
 import SensitivityToProximityToNorth from "./nn/inputs/SensitivityToProximityToNorth";
 import NeuralNetwork from "./nn/neural-network.js";
-
 export default class Simulation {
   constructor(
     sizeOfPopulation,
@@ -31,6 +31,8 @@ export default class Simulation {
 
     this._sensitivityNeuronFactory = (game) => (type) => {
       switch (type) {
+        case "SensitivityToProximityToCenter":
+          return new SensitivityToProximityToCenter(game);
         case "SensitivityToProximityToEast":
           return new SensitivityToProximityToEast(game);
         case "SensitivityToProximityToWest":

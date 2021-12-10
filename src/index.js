@@ -5,5 +5,5 @@ const { SuccessCriteriaVisualization } = require("./success-criteria-visualizati
 
 var successCriteriaVisualization = new SuccessCriteriaVisualization(SuccessCriteria.centerSmallSuccess());
 var chart = new ChartVisualization();
-var simulation = new Simulation(5000, 200, 100, 0, 10, 8, 0.0002, successCriteriaVisualization, chart);
+var simulation = new Simulation(5000, 200, 100, 0, 20, 10, 0.0001, successCriteriaVisualization, chart);
 simulation.start();
