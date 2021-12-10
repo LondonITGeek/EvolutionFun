@@ -1,0 +1,22 @@
+html body {
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0.1em;
+}
+
+.container {
+  display: grid;
+  grid-template-areas: "left right";
+}
+
+.left {
+  margin: auto;
+  grid-area: left;
+}
+
+.right {
+  grid-area: right;
+  margin: auto 200px auto 0px;
+}

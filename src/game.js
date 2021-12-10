@@ -7,12 +7,11 @@ export default class Game {
     this.successCriteriaVisualization = successCriteria;
     this.gameCreatures = [];
 
-    this.canvas = document.createElement("canvas");
+    this.canvas = document.getElementById("gameCanvas");
     this.canvas.setAttribute("id", "canvas");
     this.canvas.setAttribute("width", GAME_WIDTH * DIVISION_SIZE);
     this.canvas.setAttribute("height", GAME_HEIGHT * DIVISION_SIZE);
     this.canvas.setAttribute("style", "border: 1px solid black; box-sizing: border-box");
-    document.body.appendChild(this.canvas);
     this.ctx = canvas.getContext("2d");
   }
 
@@ -31,7 +30,8 @@ export default class Game {
       })
       .sort((a, b) => {
         if (a.fitness === 1) {
-          return 1;
+          // This is a weak attempt to not pick creatures that simply start in the success criteria zones...
+          return -1;
         }
 
         a.fitness - b.fitness;

@@ -16,7 +16,8 @@ export default class Simulation {
     sizeOfGenome,
     numberOfNeuronsInHiddenLayer,
     mutationRate,
-    successCriteriaVisualization
+    successCriteriaVisualization,
+    chartVisualization
   ) {
     this.sizeOfPopulation = sizeOfPopulation;
     this.numberOfGenerationsToRun = numberOfGenerationsToRun;
@@ -26,6 +27,7 @@ export default class Simulation {
     this.numberOfNeuronsInHiddenLayer = numberOfNeuronsInHiddenLayer;
     this.mutationRate = mutationRate;
     this.successCriteriaVisualization = successCriteriaVisualization;
+    this.chartVisualization = chartVisualization;
 
     this._sensitivityNeuronFactory = (game) => (type) => {
       switch (type) {
@@ -44,10 +46,8 @@ export default class Simulation {
 
     this.currentStepCount = 0;
     this.currentGenerationCount = 0;
-    this.generationCountLabel = document.createElement("h1");
-    document.body.appendChild(this.generationCountLabel);
-    this.stepCountLabel = document.createElement("h1");
-    document.body.appendChild(this.stepCountLabel);
+    this.generationCountLabel = document.getElementById("generationLabel");
+    this.stepCountLabel = document.getElementById("generationStepCount");
   }
 
   _randomNumberBetween(min, max) {
@@ -88,7 +88,7 @@ export default class Simulation {
 
   _generateNextCohort(survivors) {
     this.game.gameCreatures = [];
-    for (let indexOne = 0, indexTwo = 2; indexTwo < survivors.length; indexOne++, indexTwo++) {
+    for (let indexOne = 0; indexOne < survivors.length - 1; indexOne++) {
       if (this.game.gameCreatures.length > this.sizeOfPopulation) {
         console.log("Hit population limit");
         break;
@@ -150,6 +150,7 @@ export default class Simulation {
       this.generationCountLabel.innerText = `Gen ${++this.currentGenerationCount}`;
       const survivors = this.game.getSurvivors(this.successCriteriaVisualization.successCriteria);
       console.log(`Number of survivors ${survivors.length}.`);
+      this.chartVisualization.updateChart(this.currentGenerationCount, (survivors.length / this.sizeOfPopulation) * 100);
       this._generateNextCohort(survivors);
       this.currentStepCount = 0;
       this._animate();

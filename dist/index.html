@@ -2,10 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-
+    <link rel="stylesheet" href="main.css"></script>
+    <script type="module" src="main.js"></script>
     <title>JS Game</title>
   </head>
-  <body>
-    <script type="module" src="main.js"></script>
+  <body class="container">
+    <div class="left">
+      <h1 id="generationLabel"></h1>
+      <h1 id="generationStepCount"></h1>
+      
+      <canvas id="gameCanvas" style="width: 200px; height: 50px"></canvas>
+    </div>
+    <div class="right">
+      <canvas id="statisticsChart"></canvas>
+    </div>
   </body>
 </html>

@@ -11,6 +11,30 @@ export default class SuccessCriteria {
     ];
   }
 
+  static centerEastToWestSuccess() {
+    return [
+      {
+        borderColour: "green",
+        x: 0,
+        y: 220,
+        width: 640,
+        height: 200,
+      },
+    ];
+  }
+
+  static centerEastToCenterSuccess() {
+    return [
+      {
+        borderColour: "green",
+        x: 0,
+        y: 200,
+        width: 320,
+        height: 240,
+      },
+    ];
+  }
+
   static centerSmallSuccess() {
     return [
       {

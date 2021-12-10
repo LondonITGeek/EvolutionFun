@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "recharts": "^2.1.6",
-    "rxjs": "^6.5.4"
+    "chart.js": "^3.6.2"
   },
   "devDependencies": {
     "browser-sync": "^2.27.7",
